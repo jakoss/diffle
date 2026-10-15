@@ -8,6 +8,7 @@ import { z } from 'zod';
 export const LanguageIdSchema = z.enum([
   'c',
   'cpp',
+  'csharp',
   'go',
   'haskell',
   'java',
@@ -727,6 +728,7 @@ const LANGUAGE_BY_EXT: Record<string, LanguageId> = {
   cxx: 'cpp',
   go: 'go',
   h: 'c',
+  cs: 'csharp',
   hh: 'cpp',
   hpp: 'cpp',
   hs: 'haskell',

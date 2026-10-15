@@ -28,6 +28,7 @@ export const CANDIDATES: ServerCandidate[] = [
   { languages: ['rust'], command: 'rust-analyzer' },
   { languages: ['go'], command: 'gopls' },
   { languages: ['c', 'cpp'], command: 'clangd' },
+  { languages: ['csharp'], command: 'roslyn-language-server --stdio --autoLoadProjects' },
   { languages: ['ruby'], command: 'ruby-lsp' },
   { languages: ['ruby'], command: 'solargraph stdio' },
   { languages: ['java'], command: 'jdtls' },
