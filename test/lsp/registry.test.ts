@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { candidatesFor, CANDIDATES, resolveServers } from '../../src/server/lsp/registry.js';
-import { LANGUAGE_IDS } from '../../src/shared/protocol.js';
+import { languageOf, LANGUAGE_IDS } from '../../src/shared/protocol.js';
 
 /** A PATH holding exactly `programs`. */
 const path =
@@ -57,6 +57,17 @@ describe('resolveServers', () => {
       return null;
     });
     expect(probed).toEqual([...new Set(probed)]);
+  });
+
+  it('starts Roslyn for C# with project loading on, and names it when it is absent', () => {
+    expect(languageOf('Program.cs')).toBe('csharp');
+    const { servers, missing } = resolveServers(['csharp'], {}, path('roslyn-language-server'));
+    expect(servers).toEqual([{ command: 'roslyn-language-server --stdio --autoLoadProjects', languages: ['csharp'] }]);
+    expect(missing).toEqual([]);
+    // Absent from PATH, it is the one program the reader is told to install.
+    expect(resolveServers(['csharp'], {}, path()).missing).toEqual([
+      { language: 'csharp', tried: ['roslyn-language-server'] },
+    ]);
   });
 
   it('knows a server for every language it recognizes', () => {
